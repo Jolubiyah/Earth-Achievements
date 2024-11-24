@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth Achievements</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .achievement {
+            display: flex;
+            align-items: center;
+            margin: 20px auto;
+            padding: 15px;
+            background: #2a2a2a;
+            color: #2e8b57;
+            border-radius: 12px;
+            max-width: 800px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+            cursor: pointer;
+        }
+
+        .achievement:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .achievement.completed {
+            background-color: #2e8b57; /* Dark green */
+        }
+
+        .achievement img {
+            max-width: 120px;
+            border-radius: 8px;
+            margin-right: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .achievement .details {
+            flex-grow: 1;
+        }
+
+        .achievement .details h2 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+        }
+
+        .achievement .details p {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .reward {
+            display: none;
+            font-size: 1rem;
+            color: gold;
+            margin-top: 5px;
+        }
+
+        .progress-bar-container {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 200px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            background: #2e8b57;
+            transition: width 0.3s ease-in-out;
+        }
+
+        footer {
+            text-align: center;
+            margin: 20px 0;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <h1>Earth Achievements</h1>
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="tree.png" alt="Tree Icon">
+        <div class="details">
+            <h2>Plant a Forest</h2>
+            <p>Plant 1 tree.
+			<br>
+			<p>Reward: +10 Earth Points</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="recycle.png" alt="Recycle Icon">
+        <div class="details">
+            <h2>Zero Waste Warrior</h2>
+            <p>Go an entire day without producing any waste.</p>
+			<br>
+			<p>Reward: +15 Sustainability Points</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="sofa.png" alt="Bob's Furniture Icon">
+        <div class="details">
+            <h2>Bob Furniture</h2>
+            <p>Visit a Bob's Furniture store.</p>
+			<br>
+			<p>Reward: A Couch</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="employment.png" alt="Employment Icon">
+        <div class="details">
+            <h2>Employment</h2>
+            <p>Beat the final boss of getting a job.</p>
+			<br>
+			<p>Reward: A Steady Income</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="red_sea.png" alt="Red Sea Icon">
+        <div class="details">
+            <h2>The Red Sea</h2>
+            <p>Share an intimate moment with your partner during her period.</p>
+			<p>Reward: Mutual Connection Points</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="fire.png" alt="Fire Icon">
+        <div class="details">
+            <h2>Elemental Master</h2>
+            <p>Set yourself on fire.</p>
+			<p>Reward: Sponge (dirty)</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="dog.png" alt="Dog Icon">
+        <div class="details">
+            <h2>All Bark No Bite</h2>
+            <p>Piss on a dog.</p>
+			<p>Reward: Prison</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="bottle.png" alt="Baby Bottle Icon">
+        <div class="details">
+            <h2>Boss Baby</h2>
+            <p>Drop a bit of tequila inside of the infant's bottle.</p>
+			<p>Reward: Realistic Doll</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; Chase is Gay
+    </footer>
+
+    <script>
+        let completedCount = 0;
+        const totalAchievements = document.querySelectorAll('.achievement').length;
+
+        function toggleAchievement(element) {
+            // Check if the achievement is already completed
+            if (element.classList.contains('completed')) {
+                element.classList.remove('completed'); // Unmark as completed
+                completedCount--;
+            } else {
+                element.classList.add('completed'); // Mark as completed
+                completedCount++;
+            }
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const percentage = (completedCount / totalAchievements) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+    </script>
+</body>
+
+</html>
