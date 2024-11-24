@@ -17,7 +17,7 @@
 
         h1 {
             text-align: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin: 20px 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
@@ -25,12 +25,13 @@
         .achievement {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             margin: 20px auto;
             padding: 15px;
             background: #2a2a2a;
             color: #2e8b57;
             border-radius: 12px;
-            max-width: 800px;
+            max-width: 90%;
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
             cursor: pointer;
@@ -42,47 +43,44 @@
         }
 
         .achievement.completed {
-            background-color: #2e8b57; /* Dark green */
+            background-color: #2e8b57;
         }
 
         .achievement img {
-            max-width: 120px;
+            max-width: 100px;
             border-radius: 8px;
-            margin-right: 20px;
+            margin: 0 auto 10px;
+            display: block;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .achievement .details {
             flex-grow: 1;
+            text-align: center;
         }
 
         .achievement .details h2 {
-            margin: 0 0 10px;
-            font-size: 1.5rem;
+            margin: 10px 0;
+            font-size: 1.2rem;
         }
 
         .achievement .details p {
-            margin: 0;
-            font-size: 1.1rem;
-        }
-
-        .reward {
-            display: none;
+            margin: 5px 0;
             font-size: 1rem;
-            color: gold;
-            margin-top: 5px;
         }
 
         .progress-bar-container {
             position: fixed;
             top: 10px;
             left: 10px;
-            width: 200px;
+            width: 80%;
+            max-width: 300px;
             height: 20px;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             overflow: hidden;
+            z-index: 1000;
         }
 
         .progress-bar {
@@ -96,7 +94,31 @@
             text-align: center;
             margin: 20px 0;
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+        }
+
+        /* Media Query for Small Screens */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .achievement {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .achievement img {
+                max-width: 80px;
+            }
+
+            .achievement .details h2 {
+                font-size: 1rem;
+            }
+
+            .achievement .details p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -107,13 +129,13 @@
     </div>
 
     <h1>Earth Achievements</h1>
+
+    <!-- Existing Achievements -->
     <div class="achievement" onclick="toggleAchievement(this)">
         <img src="tree.png" alt="Tree Icon">
         <div class="details">
             <h2>Plant a Forest</h2>
-            <p>Plant 1 tree.
-			<br>
-			<p>Reward: +10 Earth Points</p>
+            <p>Plant 1 tree.<br>Reward: +10 Earth Points</p>
         </div>
     </div>
 
@@ -121,65 +143,18 @@
         <img src="recycle.png" alt="Recycle Icon">
         <div class="details">
             <h2>Zero Waste Warrior</h2>
-            <p>Go an entire day without producing any waste.</p>
-			<br>
-			<p>Reward: +15 Sustainability Points</p>
+            <p>Go an entire day without producing any waste.<br>Reward: +15 Sustainability Points</p>
         </div>
     </div>
 
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="sofa.png" alt="Bob's Furniture Icon">
-        <div class="details">
-            <h2>Bob Furniture</h2>
-            <p>Visit a Bob's Furniture store.</p>
-			<br>
-			<p>Reward: A Couch</p>
-        </div>
-    </div>
+    <!-- Add more achievements as needed -->
 
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="employment.png" alt="Employment Icon">
+    <!-- New Achievement: "How in the..." -->
+    <div class="achievement" id="final-achievement" style="pointer-events: none; opacity: 0.5;">
+        <img src="toycar.png" alt="Toy Car Icon">
         <div class="details">
-            <h2>Employment</h2>
-            <p>Beat the final boss of getting a job.</p>
-			<br>
-			<p>Reward: A Steady Income</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="red_sea.png" alt="Red Sea Icon">
-        <div class="details">
-            <h2>The Red Sea</h2>
-            <p>Share an intimate moment with your partner during her period.</p>
-			<p>Reward: Mutual Connection Points</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="fire.png" alt="Fire Icon">
-        <div class="details">
-            <h2>Elemental Master</h2>
-            <p>Set yourself on fire.</p>
-			<p>Reward: Sponge (dirty)</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="dog.png" alt="Dog Icon">
-        <div class="details">
-            <h2>All Bark No Bite</h2>
-            <p>Piss on a dog.</p>
-			<p>Reward: Prison</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="bottle.png" alt="Baby Bottle Icon">
-        <div class="details">
-            <h2>Boss Baby</h2>
-            <p>Drop a bit of tequila inside of the infant's bottle.</p>
-			<p>Reward: Realistic Doll</p>
+            <h2>How in the...</h2>
+            <p>100% Earth.<br>Reward: A Toy Car</p>
         </div>
     </div>
 
@@ -189,24 +164,40 @@
 
     <script>
         let completedCount = 0;
-        const totalAchievements = document.querySelectorAll('.achievement').length;
+        const achievements = document.querySelectorAll('.achievement:not(#final-achievement)');
+        const finalAchievement = document.getElementById('final-achievement');
+        const totalAchievements = achievements.length;
 
         function toggleAchievement(element) {
-            // Check if the achievement is already completed
             if (element.classList.contains('completed')) {
-                element.classList.remove('completed'); // Unmark as completed
+                element.classList.remove('completed');
                 completedCount--;
             } else {
-                element.classList.add('completed'); // Mark as completed
+                element.classList.add('completed');
                 completedCount++;
             }
             updateProgressBar();
+            checkFinalAchievement();
         }
 
         function updateProgressBar() {
             const progressBar = document.getElementById('progress-bar');
             const percentage = (completedCount / totalAchievements) * 100;
             progressBar.style.width = percentage + '%';
+        }
+
+        function checkFinalAchievement() {
+            if (completedCount === totalAchievements) {
+                finalAchievement.style.pointerEvents = 'auto';
+                finalAchievement.style.opacity = '1';
+                finalAchievement.onclick = function () {
+                    alert('Congratulations! You unlocked "How in the..." and earned a Toy Car!');
+                };
+            } else {
+                finalAchievement.style.pointerEvents = 'none';
+                finalAchievement.style.opacity = '0.5';
+                finalAchievement.onclick = null;
+            }
         }
     </script>
 </body>
