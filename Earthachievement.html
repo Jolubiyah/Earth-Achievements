@@ -140,9 +140,41 @@
             visibility: hidden;
         }
 
-        #final-achievement {
-            pointer-events: none;
-            opacity: 0.5;
+        #slice-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 100px;
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            display: none;
+            z-index: 3000;
+        }
+
+        .slice {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background: red;
+            animation: slice-fall 0.8s forwards;
+        }
+
+        .slice.top {
+            top: 0;
+        }
+
+        .slice.bottom {
+            bottom: 0;
+        }
+
+        @keyframes slice-fall {
+            50% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100px);
+            }
         }
     </style>
 </head>
@@ -160,6 +192,12 @@
         <h2 id="modal-title">Achievement Unlocked!</h2>
     </div>
 
+    <!-- Slicing Animation -->
+    <div id="slice-container">
+        <div class="slice top"></div>
+        <div class="slice bottom"></div>
+    </div>
+
     <!-- Achievements -->
     <div class="achievement" onclick="toggleAchievement(this)">
         <img src="tree.png" alt="Tree Icon">
@@ -169,7 +207,69 @@
         </div>
     </div>
 
-    <!-- Other achievements omitted for brevity -->
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="recycle.png" alt="Recycle Icon">
+        <div class="details">
+            <h2>Zero Waste Warrior</h2>
+            <p>Go an entire day without producing any waste.<br>Reward: +15 Sustainability Points</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="sofa.png" alt="Bob's Furniture Icon">
+        <div class="details">
+            <h2>Bob Furniture</h2>
+            <p>Visit a Bob's Furniture store.<br>Reward: A Couch</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="employment.png" alt="Employment Icon">
+        <div class="details">
+            <h2>Employment</h2>
+            <p>Beat the final boss of getting a job.<br>Reward: A Steady Income</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="red_sea.png" alt="Red Sea Icon">
+        <div class="details">
+            <h2>The Red Sea</h2>
+            <p>Share an intimate moment with your partner during her period.<br>Reward: Mutual Connection Points</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="fire.png" alt="Fire Icon">
+        <div class="details">
+            <h2>Elemental Master</h2>
+            <p>Set yourself on fire.<br>Reward: Sponge (dirty)</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="dog.png" alt="Dog Icon">
+        <div class="details">
+            <h2>All Bark No Bite</h2>
+            <p>Piss on a dog.<br>Reward: Prison</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="bottle.png" alt="Baby Bottle Icon">
+        <div class="details">
+            <h2>Boss Baby</h2>
+            <p>Drop a bit of tequila inside of the infant's bottle.<br>Reward: Realistic Doll</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="santa.png" alt="Santa Icon">
+        <div class="details">
+            <h2>Told ya</h2>
+            <p>Find Santa Claus.<br>Reward: Unlimited Presents</p>
+        </div>
+    </div>
 
     <div class="achievement" id="final-achievement">
         <img src="toycar.png" alt="Toy Car Icon">
@@ -192,6 +292,7 @@
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
+        const sliceContainer = document.getElementById('slice-container');
 
         function toggleAchievement(element) {
             if (element.classList.contains('completed')) {
@@ -217,7 +318,8 @@
                 finalAchievement.style.pointerEvents = 'auto';
                 finalAchievement.style.opacity = '1';
                 finalAchievement.onclick = function () {
-                    showModal(finalAchievement); // Show modal for final achievement
+                    showModal(finalAchievement);
+                    triggerSliceAnimation(); // Trigger slicing effect
                 };
             } else {
                 finalAchievement.style.pointerEvents = 'none';
@@ -237,6 +339,13 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
             }, 2000); // Hide modal after 2 seconds
+        }
+
+        function triggerSliceAnimation() {
+            sliceContainer.style.display = 'block';
+            setTimeout(() => {
+                sliceContainer.style.display = 'none';
+            }, 800); // Hide slice after animation
         }
     </script>
 </body>
