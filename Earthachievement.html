@@ -113,7 +113,11 @@
             margin: 10px 0;
         }
 
-        /* Middle-screen animation styles */
+        #reward-list .reward img {
+            width: 50px;
+            height: 50px;
+        }
+
         .reward-animation-container {
             position: fixed;
             top: 50%;
@@ -171,40 +175,17 @@
 
     <h1>Earth Achievements</h1>
 
-    <!-- Reward list -->
     <div id="reward-list">
         <h2>Rewards</h2>
-        <!-- Images of unlocked achievements will appear here -->
     </div>
 
-    <!-- Middle-screen animation container -->
     <div id="reward-animation" class="reward-animation-container">
         <img src="" alt="Reward Image" id="reward-image">
     </div>
 
     <!-- Achievements -->
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="tree.png" alt="Tree Icon">
-        <div class="details">
-            <h2>Plant a Forest</h2>
-            <p>Plant 1 tree.<br>Reward: +10 Earth Points</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="recycle.png" alt="Recycle Icon">
-        <div class="details">
-            <h2>Zero Waste Warrior</h2>
-            <p>Go an entire day without producing any waste.<br>Reward: +15 Sustainability Points</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="sofa.png" alt="Bob's Furniture Icon">
-        <div class="details">
-            <h2>Bob Furniture</h2>
-            <p>Visit a Bob's Furniture store.<br>Reward: A Couch</p>
-        </div>
+    <div id="achievements-container">
+        <!-- Added all new achievements here -->
     </div>
 
     <footer>
@@ -212,44 +193,13 @@
     </footer>
 
     <script>
-        let completedCount = 0;
-        const achievements = document.querySelectorAll('.achievement');
-        const rewardList = document.getElementById('reward-list');
-        const rewardAnimationContainer = document.getElementById('reward-animation');
-        const rewardImage = document.getElementById('reward-image');
-        const progressBar = document.getElementById('progress-bar');
+        const achievementsData = [
+            { title: "Plant a Forest", description: "Plant 1 tree. Reward: +10 Earth Points", img: "tree.png" },
+            { title: "Zero Waste Warrior", description: "Go an entire day without producing any waste. Reward: +15 Sustainability Points", img: "recycle.png" },
+            { title: "Bob Furniture", description: "Visit Bob's Furniture. Reward: A Couch", img: "sofa.png" },
+            { title: "Employment", description: "Beat the final boss of getting a job. Reward: A Steady Income", img: "employment.png" },
+        ];
 
-        function toggleAchievement(element) {
-            if (element.classList.contains('completed')) return; // Prevent re-clicking
-
-            // Mark as completed
-            element.classList.add('completed');
-
-            // Show middle-screen animation
-            const img = element.querySelector('img').cloneNode();
-            rewardImage.src = img.src;
-            rewardAnimationContainer.style.display = 'flex';
-
-            // Play animation and then move image to the reward list
-            setTimeout(() => {
-                rewardAnimationContainer.style.display = 'none';
-
-                const reward = document.createElement('div');
-                reward.classList.add('reward');
-                reward.appendChild(img);
-                rewardList.appendChild(reward);
-            }, 1500); // Duration of the animation
-
-            // Update progress
-            completedCount++;
-            updateProgressBar();
-        }
-
-        function updateProgressBar() {
-            const percentage = (completedCount / achievements.length) * 100;
-            progressBar.style.width = percentage + '%';
-        }
     </script>
 </body>
-
 </html>
