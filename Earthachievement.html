@@ -35,6 +35,7 @@
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
             cursor: pointer;
+            position: relative;
         }
 
         .achievement:hover {
@@ -90,34 +91,54 @@
             transition: width 0.3s ease-in-out;
         }
 
+        #reward-list {
+            position: fixed;
+            right: 20px;
+            top: 60px;
+            width: 200px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #reward-list h2 {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        #reward-list .reward {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        /* Reward animation */
+        @keyframes reward-animation {
+            0% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(20deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        .reward-animation {
+            animation: reward-animation 0.8s ease-in-out;
+        }
+
         footer {
             text-align: center;
             margin: 20px 0;
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.8rem;
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .achievement {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .achievement img {
-                max-width: 80px;
-            }
-
-            .achievement .details h2 {
-                font-size: 1rem;
-            }
-
-            .achievement .details p {
-                font-size: 0.9rem;
-            }
         }
     </style>
 </head>
@@ -131,6 +152,12 @@
 
     <!-- Add an audio element for the sound effect -->
     <audio id="achievement-sound" src="Legend_of_Zelda_Chest_Opening_and_Getting_Item.mp3"></audio>
+
+    <!-- Reward list -->
+    <div id="reward-list">
+        <h2>Rewards</h2>
+        <!-- Images of unlocked achievements will appear here -->
+    </div>
 
     <!-- Achievements -->
     <div class="achievement" onclick="toggleAchievement(this)">
@@ -157,61 +184,7 @@
         </div>
     </div>
 
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="employment.png" alt="Employment Icon">
-        <div class="details">
-            <h2>Employment</h2>
-            <p>Beat the final boss of getting a job.<br>Reward: A Steady Income</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="red_sea.png" alt="Red Sea Icon">
-        <div class="details">
-            <h2>The Red Sea</h2>
-            <p>Share an intimate moment with your partner during her period.<br>Reward: Mutual Connection Points</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="fire.png" alt="Fire Icon">
-        <div class="details">
-            <h2>Elemental Master</h2>
-            <p>Set yourself on fire.<br>Reward: Sponge (dirty)</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="dog.png" alt="Dog Icon">
-        <div class="details">
-            <h2>All Bark No Bite</h2>
-            <p>Piss on a dog.<br>Reward: Prison</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="bottle.png" alt="Baby Bottle Icon">
-        <div class="details">
-            <h2>Boss Baby</h2>
-            <p>Drop a bit of tequila inside of the infant's bottle.<br>Reward: Realistic Doll</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="santa.png" alt="Santa Icon">
-        <div class="details">
-            <h2>Told ya</h2>
-            <p>Find Santa Claus.<br>Reward: Unlimited Presents</p>
-        </div>
-    </div>
-
-    <div class="achievement" id="final-achievement" style="pointer-events: none; opacity: 0.5;">
-        <img src="toycar.png" alt="Toy Car Icon">
-        <div class="details">
-            <h2>How in the...</h2>
-            <p>100% Earth.<br>Reward: A Toy Car</p>
-        </div>
-    </div>
+    <!-- More achievements can be added here -->
 
     <footer>
         &copy; Chase is Gay
@@ -219,43 +192,37 @@
 
     <script>
         let completedCount = 0;
-        const achievements = document.querySelectorAll('.achievement:not(#final-achievement)');
-        const finalAchievement = document.getElementById('final-achievement');
-        const totalAchievements = achievements.length;
-        const achievementSound = document.getElementById('achievement-sound'); // Reference to the audio element
+        const achievements = document.querySelectorAll('.achievement');
+        const achievementSound = document.getElementById('achievement-sound');
+        const rewardList = document.getElementById('reward-list');
 
         function toggleAchievement(element) {
-            if (element.classList.contains('completed')) {
-                element.classList.remove('completed');
-                completedCount--;
-            } else {
-                element.classList.add('completed');
-                completedCount++;
-                achievementSound.currentTime = 0; // Reset sound
-                achievementSound.play(); // Play the sound
-            }
+            if (element.classList.contains('completed')) return; // Prevent re-clicking
+
+            // Mark as completed
+            element.classList.add('completed');
+
+            // Play sound
+            achievementSound.currentTime = 0;
+            achievementSound.play();
+
+            // Add reward to the list
+            const img = element.querySelector('img').cloneNode();
+            img.classList.add('reward-animation');
+            const reward = document.createElement('div');
+            reward.classList.add('reward');
+            reward.appendChild(img);
+            rewardList.appendChild(reward);
+
+            // Update progress
+            completedCount++;
             updateProgressBar();
-            checkFinalAchievement();
         }
 
         function updateProgressBar() {
             const progressBar = document.getElementById('progress-bar');
-            const percentage = (completedCount / totalAchievements) * 100;
+            const percentage = (completedCount / achievements.length) * 100;
             progressBar.style.width = percentage + '%';
-        }
-
-        function checkFinalAchievement() {
-            if (completedCount === totalAchievements) {
-                finalAchievement.style.pointerEvents = 'auto';
-                finalAchievement.style.opacity = '1';
-                finalAchievement.onclick = function () {
-                    alert('Congratulations! You unlocked "How in the..." and earned a Toy Car!');
-                };
-            } else {
-                finalAchievement.style.pointerEvents = 'none';
-                finalAchievement.style.opacity = '0.5';
-                finalAchievement.onclick = null;
-            }
         }
     </script>
 </body>
