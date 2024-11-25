@@ -144,9 +144,10 @@
             position: fixed;
             top: 0;
             left: 50%;
-            width: 5px;
+            width: 8px;
             height: 100vh;
-            background: linear-gradient(to bottom, red, transparent 80%);
+            background: linear-gradient(to bottom, rgba(255, 0, 0, 0.8), transparent 80%);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 40px rgba(255, 0, 0, 0.4);
             transform-origin: top left;
             transform: scaleX(0);
             z-index: 3000;
@@ -158,11 +159,16 @@
             0% {
                 transform: scaleX(0) rotate(0deg);
             }
-            30% {
-                transform: scaleX(1) rotate(20deg);
+            20% {
+                transform: scaleX(1) rotate(15deg);
+                box-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 50px rgba(255, 0, 0, 0.8);
+            }
+            50% {
+                transform: scaleX(1) rotate(45deg);
+                opacity: 1;
             }
             100% {
-                transform: scaleX(0) rotate(45deg);
+                transform: scaleX(0) rotate(60deg);
                 opacity: 0;
             }
         }
@@ -193,8 +199,6 @@
             <p>Plant 1 tree.<br>Reward: +10 Earth Points</p>
         </div>
     </div>
-
-    <!-- Add more achievements as needed -->
 
     <div class="achievement" id="final-achievement">
         <img src="toycar.png" alt="Toy Car Icon">
@@ -268,6 +272,9 @@
 
         function triggerSliceAnimation() {
             sliceContainer.style.display = 'block';
+            sliceContainer.style.animation = 'none';
+            sliceContainer.offsetHeight; // Trigger reflow
+            sliceContainer.style.animation = 'slice-move 0.8s ease-in-out forwards';
             setTimeout(() => {
                 sliceContainer.style.display = 'none';
             }, 800);
