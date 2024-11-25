@@ -140,37 +140,9 @@
             visibility: hidden;
         }
 
-        #slice-container {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            width: 8px;
-            height: 100vh;
-            background: linear-gradient(to bottom, rgba(255, 0, 0, 0.8), transparent 80%);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 40px rgba(255, 0, 0, 0.4);
-            transform-origin: top left;
-            transform: scaleX(0);
-            z-index: 3000;
-            display: none;
-            animation: slice-move 0.8s ease-in-out forwards;
-        }
-
-        @keyframes slice-move {
-            0% {
-                transform: scaleX(0) rotate(0deg);
-            }
-            20% {
-                transform: scaleX(1) rotate(15deg);
-                box-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 50px rgba(255, 0, 0, 0.8);
-            }
-            50% {
-                transform: scaleX(1) rotate(45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: scaleX(0) rotate(60deg);
-                opacity: 0;
-            }
+        #final-achievement {
+            pointer-events: none;
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -188,9 +160,6 @@
         <h2 id="modal-title">Achievement Unlocked!</h2>
     </div>
 
-    <!-- Slicing Animation -->
-    <div id="slice-container"></div>
-
     <!-- Achievements -->
     <div class="achievement" onclick="toggleAchievement(this)">
         <img src="tree.png" alt="Tree Icon">
@@ -200,6 +169,70 @@
         </div>
     </div>
 
+<div class="achievement" onclick="toggleAchievement(this)">
+        <img src="recycle.png" alt="Recycle Icon">
+        <div class="details">
+            <h2>Zero Waste Warrior</h2>
+            <p>Go an entire day without producing any waste.<br>Reward: +15 Sustainability Points</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="sofa.png" alt="Bob's Furniture Icon">
+        <div class="details">
+            <h2>Bob Furniture</h2>
+            <p>Visit a Bob's Furniture store.<br>Reward: A Couch</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="employment.png" alt="Employment Icon">
+        <div class="details">
+            <h2>Employment</h2>
+            <p>Beat the final boss of getting a job.<br>Reward: A Steady Income</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="red_sea.png" alt="Red Sea Icon">
+        <div class="details">
+            <h2>The Red Sea</h2>
+            <p>Share an intimate moment with your partner during her period.<br>Reward: Mutual Connection Points</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="fire.png" alt="Fire Icon">
+        <div class="details">
+            <h2>Elemental Master</h2>
+            <p>Set yourself on fire.<br>Reward: Sponge (dirty)</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="dog.png" alt="Dog Icon">
+        <div class="details">
+            <h2>All Bark No Bite</h2>
+            <p>Piss on a dog.<br>Reward: Prison</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="bottle.png" alt="Baby Bottle Icon">
+        <div class="details">
+            <h2>Boss Baby</h2>
+            <p>Drop a bit of tequila inside of the infant's bottle.<br>Reward: Realistic Doll</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="santa.png" alt="Santa Icon">
+        <div class="details">
+            <h2>Told ya</h2>
+            <p>Find Santa Claus.<br>Reward: Unlimited Presents</p>
+        </div>
+    </div>
+    
     <div class="achievement" id="final-achievement">
         <img src="toycar.png" alt="Toy Car Icon">
         <div class="details">
@@ -221,7 +254,6 @@
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
-        const sliceContainer = document.getElementById('slice-container');
 
         function toggleAchievement(element) {
             if (element.classList.contains('completed')) {
@@ -247,8 +279,7 @@
                 finalAchievement.style.pointerEvents = 'auto';
                 finalAchievement.style.opacity = '1';
                 finalAchievement.onclick = function () {
-                    showModal(finalAchievement);
-                    triggerSliceAnimation();
+                    alert('Congratulations! You unlocked "How in the..." and earned a Toy Car!');
                 };
             } else {
                 finalAchievement.style.pointerEvents = 'none';
@@ -267,17 +298,7 @@
             modal.classList.remove('hidden');
             setTimeout(() => {
                 modal.classList.add('hidden');
-            }, 2000);
-        }
-
-        function triggerSliceAnimation() {
-            sliceContainer.style.display = 'block';
-            sliceContainer.style.animation = 'none';
-            sliceContainer.offsetHeight; // Trigger reflow
-            sliceContainer.style.animation = 'slice-move 0.8s ease-in-out forwards';
-            setTimeout(() => {
-                sliceContainer.style.display = 'none';
-            }, 800);
+            }, 2000); // Hide modal after 2 seconds
         }
     </script>
 </body>
