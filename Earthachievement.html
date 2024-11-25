@@ -90,34 +90,49 @@
             transition: width 0.3s ease-in-out;
         }
 
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            text-align: center;
+            animation: scaleUp 0.5s ease-out forwards;
+        }
+
+        .modal img {
+            max-width: 150px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .modal h2 {
+            color: #ADD8E6;
+            margin: 10px 0;
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: translate(-50%, -50%) scale(0);
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .modal.hidden {
+            display: none;
+        }
+
         footer {
             text-align: center;
             margin: 20px 0;
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.8rem;
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .achievement {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .achievement img {
-                max-width: 80px;
-            }
-
-            .achievement .details h2 {
-                font-size: 1rem;
-            }
-
-            .achievement .details p {
-                font-size: 0.9rem;
-            }
         }
     </style>
 </head>
@@ -213,11 +228,19 @@
         &copy; Chase is Gay
     </footer>
 
+    <!-- Modal Element -->
+    <div class="modal hidden" id="modal">
+        <img src="" alt="Achievement Image" id="modal-img">
+        <h2 id="modal-title"></h2>
+    </div>
+
     <script>
         let completedCount = 0;
         const achievements = document.querySelectorAll('.achievement:not(#final-achievement)');
-        const finalAchievement = document.getElementById('final-achievement');
         const totalAchievements = achievements.length;
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
 
         function toggleAchievement(element) {
             if (element.classList.contains('completed')) {
@@ -226,9 +249,9 @@
             } else {
                 element.classList.add('completed');
                 completedCount++;
+                showModal(element);
             }
             updateProgressBar();
-            checkFinalAchievement();
         }
 
         function updateProgressBar() {
@@ -237,18 +260,17 @@
             progressBar.style.width = percentage + '%';
         }
 
-        function checkFinalAchievement() {
-            if (completedCount === totalAchievements) {
-                finalAchievement.style.pointerEvents = 'auto';
-                finalAchievement.style.opacity = '1';
-                finalAchievement.onclick = function () {
-                    alert('Congratulations! You unlocked "How in the..." and earned a Toy Car!');
-                };
-            } else {
-                finalAchievement.style.pointerEvents = 'none';
-                finalAchievement.style.opacity = '0.5';
-                finalAchievement.onclick = null;
-            }
+        function showModal(element) {
+            const imgSrc = element.querySelector('img').src;
+            const title = element.querySelector('.details h2').textContent;
+
+            modalImg.src = imgSrc;
+            modalTitle.textContent = title;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 2000); // Hide after 2 seconds
         }
     </script>
 </body>
