@@ -35,7 +35,6 @@
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
             cursor: pointer;
-            position: relative;
         }
 
         .achievement:hover {
@@ -114,24 +113,46 @@
             margin: 10px 0;
         }
 
-        /* Reward animation */
-        @keyframes reward-animation {
-            0% {
-                transform: scale(1) rotate(0);
-                opacity: 1;
+        /* Middle-screen animation styles */
+        .reward-animation-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10000;
+            animation: fade-in 0.5s ease-in-out;
+        }
+
+        .reward-animation-container img {
+            max-width: 150px;
+            animation: scale-up 1s ease-in-out;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
             }
-            50% {
-                transform: scale(1.5) rotate(20deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1) rotate(0);
+            to {
                 opacity: 1;
             }
         }
 
-        .reward-animation {
-            animation: reward-animation 0.8s ease-in-out;
+        @keyframes scale-up {
+            0% {
+                transform: scale(0.5);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
         footer {
@@ -150,13 +171,15 @@
 
     <h1>Earth Achievements</h1>
 
-    <!-- Add an audio element for the sound effect -->
-    <audio id="achievement-sound" src="Legend_of_Zelda_Chest_Opening_and_Getting_Item.mp3"></audio>
-
     <!-- Reward list -->
     <div id="reward-list">
         <h2>Rewards</h2>
         <!-- Images of unlocked achievements will appear here -->
+    </div>
+
+    <!-- Middle-screen animation container -->
+    <div id="reward-animation" class="reward-animation-container">
+        <img src="" alt="Reward Image" id="reward-image">
     </div>
 
     <!-- Achievements -->
@@ -184,8 +207,6 @@
         </div>
     </div>
 
-    <!-- More achievements can be added here -->
-
     <footer>
         &copy; Chase is Gay
     </footer>
@@ -193,8 +214,10 @@
     <script>
         let completedCount = 0;
         const achievements = document.querySelectorAll('.achievement');
-        const achievementSound = document.getElementById('achievement-sound');
         const rewardList = document.getElementById('reward-list');
+        const rewardAnimationContainer = document.getElementById('reward-animation');
+        const rewardImage = document.getElementById('reward-image');
+        const progressBar = document.getElementById('progress-bar');
 
         function toggleAchievement(element) {
             if (element.classList.contains('completed')) return; // Prevent re-clicking
@@ -202,17 +225,20 @@
             // Mark as completed
             element.classList.add('completed');
 
-            // Play sound
-            achievementSound.currentTime = 0;
-            achievementSound.play();
-
-            // Add reward to the list
+            // Show middle-screen animation
             const img = element.querySelector('img').cloneNode();
-            img.classList.add('reward-animation');
-            const reward = document.createElement('div');
-            reward.classList.add('reward');
-            reward.appendChild(img);
-            rewardList.appendChild(reward);
+            rewardImage.src = img.src;
+            rewardAnimationContainer.style.display = 'flex';
+
+            // Play animation and then move image to the reward list
+            setTimeout(() => {
+                rewardAnimationContainer.style.display = 'none';
+
+                const reward = document.createElement('div');
+                reward.classList.add('reward');
+                reward.appendChild(img);
+                rewardList.appendChild(reward);
+            }, 1500); // Duration of the animation
 
             // Update progress
             completedCount++;
@@ -220,7 +246,6 @@
         }
 
         function updateProgressBar() {
-            const progressBar = document.getElementById('progress-bar');
             const percentage = (completedCount / achievements.length) * 100;
             progressBar.style.width = percentage + '%';
         }
