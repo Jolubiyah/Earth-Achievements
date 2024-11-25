@@ -129,6 +129,10 @@
 
     <h1>Earth Achievements</h1>
 
+    <!-- Add an audio element for the sound effect -->
+    <audio id="achievement-sound" src="Legend_of_Zelda_Chest_Opening_and_Getting_Item.mp3"></audio>
+
+    <!-- Achievements -->
     <div class="achievement" onclick="toggleAchievement(this)">
         <img src="tree.png" alt="Tree Icon">
         <div class="details">
@@ -145,61 +149,7 @@
         </div>
     </div>
 
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="sofa.png" alt="Bob's Furniture Icon">
-        <div class="details">
-            <h2>Bob Furniture</h2>
-            <p>Visit a Bob's Furniture store.<br>Reward: A Couch</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="employment.png" alt="Employment Icon">
-        <div class="details">
-            <h2>Employment</h2>
-            <p>Beat the final boss of getting a job.<br>Reward: A Steady Income</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="red_sea.png" alt="Red Sea Icon">
-        <div class="details">
-            <h2>The Red Sea</h2>
-            <p>Share an intimate moment with your partner during her period.<br>Reward: Mutual Connection Points</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="fire.png" alt="Fire Icon">
-        <div class="details">
-            <h2>Elemental Master</h2>
-            <p>Set yourself on fire.<br>Reward: Sponge (dirty)</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="dog.png" alt="Dog Icon">
-        <div class="details">
-            <h2>All Bark No Bite</h2>
-            <p>Piss on a dog.<br>Reward: Prison</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="bottle.png" alt="Baby Bottle Icon">
-        <div class="details">
-            <h2>Boss Baby</h2>
-            <p>Drop a bit of tequila inside of the infant's bottle.<br>Reward: Realistic Doll</p>
-        </div>
-    </div>
-
-    <div class="achievement" onclick="toggleAchievement(this)">
-        <img src="santa.png" alt="Santa Icon">
-        <div class="details">
-            <h2>Told ya</h2>
-            <p>Find Santa Claus.<br>Reward: Unlimited Presents</p>
-        </div>
-    </div>
+    <!-- Add your other achievements here -->
 
     <div class="achievement" id="final-achievement" style="pointer-events: none; opacity: 0.5;">
         <img src="toycar.png" alt="Toy Car Icon">
@@ -218,6 +168,7 @@
         const achievements = document.querySelectorAll('.achievement:not(#final-achievement)');
         const finalAchievement = document.getElementById('final-achievement');
         const totalAchievements = achievements.length;
+        const achievementSound = document.getElementById('achievement-sound'); // Reference to the audio element
 
         function toggleAchievement(element) {
             if (element.classList.contains('completed')) {
@@ -226,6 +177,8 @@
             } else {
                 element.classList.add('completed');
                 completedCount++;
+                achievementSound.currentTime = 0; // Reset sound
+                achievementSound.play(); // Play the sound
             }
             updateProgressBar();
             checkFinalAchievement();
