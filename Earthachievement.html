@@ -90,80 +90,34 @@
             transition: width 0.3s ease-in-out;
         }
 
-        #reward-list {
-            position: fixed;
-            right: 20px;
-            top: 60px;
-            width: 200px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        #reward-list h2 {
-            text-align: center;
-            font-size: 1.2rem;
-        }
-
-        #reward-list .reward {
-            display: flex;
-            justify-content: center;
-            margin: 10px 0;
-        }
-
-        #reward-list .reward img {
-            width: 50px;
-            height: 50px;
-        }
-
-        .reward-animation-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 20px;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10000;
-            animation: fade-in 0.5s ease-in-out;
-        }
-
-        .reward-animation-container img {
-            max-width: 150px;
-            animation: scale-up 1s ease-in-out;
-        }
-
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes scale-up {
-            0% {
-                transform: scale(0.5);
-            }
-            50% {
-                transform: scale(1.5);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
         footer {
             text-align: center;
             margin: 20px 0;
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.8rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .achievement {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .achievement img {
+                max-width: 80px;
+            }
+
+            .achievement .details h2 {
+                font-size: 1rem;
+            }
+
+            .achievement .details p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -175,17 +129,84 @@
 
     <h1>Earth Achievements</h1>
 
-    <div id="reward-list">
-        <h2>Rewards</h2>
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="tree.png" alt="Tree Icon">
+        <div class="details">
+            <h2>Plant a Forest</h2>
+            <p>Plant 1 tree.<br>Reward: +10 Earth Points</p>
+        </div>
     </div>
 
-    <div id="reward-animation" class="reward-animation-container">
-        <img src="" alt="Reward Image" id="reward-image">
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="recycle.png" alt="Recycle Icon">
+        <div class="details">
+            <h2>Zero Waste Warrior</h2>
+            <p>Go an entire day without producing any waste.<br>Reward: +15 Sustainability Points</p>
+        </div>
     </div>
 
-    <!-- Achievements -->
-    <div id="achievements-container">
-        <!-- Added all new achievements here -->
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="sofa.png" alt="Bob's Furniture Icon">
+        <div class="details">
+            <h2>Bob Furniture</h2>
+            <p>Visit a Bob's Furniture store.<br>Reward: A Couch</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="employment.png" alt="Employment Icon">
+        <div class="details">
+            <h2>Employment</h2>
+            <p>Beat the final boss of getting a job.<br>Reward: A Steady Income</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="red_sea.png" alt="Red Sea Icon">
+        <div class="details">
+            <h2>The Red Sea</h2>
+            <p>Share an intimate moment with your partner during her period.<br>Reward: Mutual Connection Points</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="fire.png" alt="Fire Icon">
+        <div class="details">
+            <h2>Elemental Master</h2>
+            <p>Set yourself on fire.<br>Reward: Sponge (dirty)</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="dog.png" alt="Dog Icon">
+        <div class="details">
+            <h2>All Bark No Bite</h2>
+            <p>Piss on a dog.<br>Reward: Prison</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="bottle.png" alt="Baby Bottle Icon">
+        <div class="details">
+            <h2>Boss Baby</h2>
+            <p>Drop a bit of tequila inside of the infant's bottle.<br>Reward: Realistic Doll</p>
+        </div>
+    </div>
+
+    <div class="achievement" onclick="toggleAchievement(this)">
+        <img src="santa.png" alt="Santa Icon">
+        <div class="details">
+            <h2>Told ya</h2>
+            <p>Find Santa Claus.<br>Reward: Unlimited Presents</p>
+        </div>
+    </div>
+
+    <div class="achievement" id="final-achievement" style="pointer-events: none; opacity: 0.5;">
+        <img src="toycar.png" alt="Toy Car Icon">
+        <div class="details">
+            <h2>How in the...</h2>
+            <p>100% Earth.<br>Reward: A Toy Car</p>
+        </div>
     </div>
 
     <footer>
@@ -193,13 +214,43 @@
     </footer>
 
     <script>
-        const achievementsData = [
-            { title: "Plant a Forest", description: "Plant 1 tree. Reward: +10 Earth Points", img: "tree.png" },
-            { title: "Zero Waste Warrior", description: "Go an entire day without producing any waste. Reward: +15 Sustainability Points", img: "recycle.png" },
-            { title: "Bob Furniture", description: "Visit Bob's Furniture. Reward: A Couch", img: "sofa.png" },
-            { title: "Employment", description: "Beat the final boss of getting a job. Reward: A Steady Income", img: "employment.png" },
-        ];
+        let completedCount = 0;
+        const achievements = document.querySelectorAll('.achievement:not(#final-achievement)');
+        const finalAchievement = document.getElementById('final-achievement');
+        const totalAchievements = achievements.length;
 
+        function toggleAchievement(element) {
+            if (element.classList.contains('completed')) {
+                element.classList.remove('completed');
+                completedCount--;
+            } else {
+                element.classList.add('completed');
+                completedCount++;
+            }
+            updateProgressBar();
+            checkFinalAchievement();
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const percentage = (completedCount / totalAchievements) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+
+        function checkFinalAchievement() {
+            if (completedCount === totalAchievements) {
+                finalAchievement.style.pointerEvents = 'auto';
+                finalAchievement.style.opacity = '1';
+                finalAchievement.onclick = function () {
+                    alert('Congratulations! You unlocked "How in the..." and earned a Toy Car!');
+                };
+            } else {
+                finalAchievement.style.pointerEvents = 'none';
+                finalAchievement.style.opacity = '0.5';
+                finalAchievement.onclick = null;
+            }
+        }
     </script>
 </body>
+
 </html>
